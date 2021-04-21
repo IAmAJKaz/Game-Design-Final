@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - Bullet
+  - Enemy
+  - Currency
+  - Destructable
   layers:
   - Default
   - TransparentFX
@@ -13,10 +18,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Collidable objects
+  - CameraBounds
+  - Destructable
   - 
   - 
   - 
@@ -38,6 +43,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background 01
+    uniqueID: 3900006269
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
