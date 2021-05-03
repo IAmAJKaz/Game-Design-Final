@@ -18,6 +18,10 @@ public class PlayerMovement : MonoBehaviour {
     KeyCode lastKeyCode;
     */
 
+    //Teleport Variables
+    public bool teleport;
+    public LayerMask whatIsTele;
+
     [HideInInspector] public bool isFacingRight = true;
 
     float mx;

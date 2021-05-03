@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Currency
   - Destructable
+  - DeathBarrier
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Collidable objects
   - CameraBounds
   - Destructable
-  - 
+  - DeathBarrier
   - 
   - 
   - 
