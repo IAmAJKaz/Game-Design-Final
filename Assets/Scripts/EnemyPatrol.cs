@@ -41,7 +41,7 @@ public class EnemyPatrol : MonoBehaviour {
             if(hp == 0) {
                 Destroy(gameObject);
             }
-           // GetComponent<Renderer>().material.color = Color.white;
+           //GetComponent<Renderer>().material.color = Color.white;
         }
     }
 }
