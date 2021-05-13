@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class CaveTrigger : MonoBehaviour {
+public class HiddenTraps : MonoBehaviour {
 
     public TilemapRenderer tmRend;
     public TilemapCollider2D tmCol;
@@ -12,7 +12,7 @@ public class CaveTrigger : MonoBehaviour {
         tmRend = GetComponent<TilemapRenderer>();
         tmCol = GetComponent<TilemapCollider2D>();
     }
-    
+
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.CompareTag("Player")) {
