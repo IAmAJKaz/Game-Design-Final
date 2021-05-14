@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
     public static LevelManager instance;
@@ -11,6 +12,8 @@ public class LevelManager : MonoBehaviour {
     public GameObject playerPrefab;
 
     public CinemachineVirtualCameraBase cam;
+
+    public GameOver gameOver;
 
     [Header("Lives")]
     public int playerLives;
@@ -29,13 +32,14 @@ public class LevelManager : MonoBehaviour {
     public void Respawn() {
         playerLives--;
         livesUI.text = "" + playerLives;
-        if (playerLives >= 0) {
+        if (playerLives > 0) {
             GameObject player = Instantiate(playerPrefab, respawnPoint.position, Quaternion.identity);
             cam.Follow = player.transform;
         }
         else {
-            livesUI.text = "0";
-            Debug.Log("You lost, haha you suck");
+            gameOver.LoseScreen();
+            //livesUI.text = "0";
+            //Debug.Log("You lost, haha you suck");
         }
     }
 

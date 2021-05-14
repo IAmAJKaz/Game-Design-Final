@@ -12,36 +12,62 @@ public class EnemyPatrol : MonoBehaviour {
     bool isFacingRight = true;
     public int hp = 2;
 
+    public Animator anim;
+
+    //Death Variables
+    private bool isDead;
+    private Collider2D enemyCol;
+    public float shockForce;
+    private bool ctrlActive;
+
     RaycastHit2D hit;
-    
+
+    private void Start() {
+        enemyCol = GetComponent<Collider2D>();
+        ctrlActive = true;
+    }
     private void Update() {
         hit = Physics2D.Raycast(groundCheck.position, -transform.up, 1f, groundLayers);
     }
 
     private void FixedUpdate() {
-        if (hit.collider != false) {
-            if (isFacingRight) {
-                rb.velocity = new Vector2(speed, rb.velocity.y);
+        if (ctrlActive) {
+            if (hit.collider != false) {
+                if (isFacingRight) {
+                    rb.velocity = new Vector2(speed, rb.velocity.y);
+                }
+                else {
+                    rb.velocity = new Vector2(-speed, rb.velocity.y);
+                }
             }
             else {
-                rb.velocity = new Vector2(-speed, rb.velocity.y);
+                isFacingRight = !isFacingRight;
+                transform.localScale = new Vector3(-transform.localScale.x, 1.75f, 1.75f);
             }
-        }
-        else {
-            isFacingRight = !isFacingRight;
-            transform.localScale = new Vector3(-transform.localScale.x, 1.75f, 1.75f);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Bullet")) {
-            //GetComponent<Renderer>().material.color = Color.red;
             hp--;
-            if(hp == 0) {
-                Destroy(gameObject);
+            if(hp <= 0) {
+                EnemyDeath();
             }
-           //GetComponent<Renderer>().material.color = Color.white;
         }
+    }
+
+    private void EnemyDeath() {
+        isDead = true;
+        anim.SetBool("isDead", isDead);
+        enemyCol.enabled = false;
+        ctrlActive = false;
+        rb.AddForce(transform.up * shockForce, ForceMode2D.Impulse);
+        StartCoroutine("death");
+    }
+    
+    IEnumerator death() {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 
 }
