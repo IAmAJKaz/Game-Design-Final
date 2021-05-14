@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour {
     public int playerLives;
     public Text livesUI;
 
+
     [Header("Currency")]
     public int currency = 0;
     public Text currencyUI;
@@ -42,4 +43,12 @@ public class LevelManager : MonoBehaviour {
         currency += amount;
         currencyUI.text = "$" + currency;
     }
+    public void AddLife() {
+        playerLives++;
+        livesUI.text = "" + playerLives;
+    }
+    public void TakeLife() {
+        playerLives--;
+    }
 }
+

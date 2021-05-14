@@ -20,8 +20,7 @@ public class EnemyPatrol : MonoBehaviour {
 
     private void FixedUpdate() {
         if (hit.collider != false) {
-            if (isFacingRight)
-            {
+            if (isFacingRight) {
                 rb.velocity = new Vector2(speed, rb.velocity.y);
             }
             else {
@@ -44,4 +43,5 @@ public class EnemyPatrol : MonoBehaviour {
            //GetComponent<Renderer>().material.color = Color.white;
         }
     }
+
 }

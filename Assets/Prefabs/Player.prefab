@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 3420274616539187079}
   - component: {fileID: 3420274616539187072}
   - component: {fileID: 3420274616539187073}
-  - component: {fileID: 1437917263}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -152,11 +151,19 @@ MonoBehaviour:
   movementSpeed: 10
   rb: {fileID: 3420274616539187099}
   anim: {fileID: 3420274616539187072}
+  childObjs:
+  - {fileID: 3420274616695927775}
+  - {fileID: 3420274616779050929}
+  shockForce: 7
   jumpForce: 25
   feet: {fileID: 3420274616695927768}
   groundLayers:
     serializedVersion: 2
     m_Bits: 768
+  teleport: 0
+  whatIsTele:
+    serializedVersion: 2
+    m_Bits: 0
   isFacingRight: 1
 --- !u!95 &3420274616539187072
 Animator:
@@ -193,18 +200,6 @@ MonoBehaviour:
   firingPoint: {fileID: 3420274616779050930}
   bulletPrefab: {fileID: 4954321505438227687, guid: c84d3058112f86b4b99c0201edc57782,
     type: 3}
---- !u!114 &1437917263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3420274616539187098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dad1fc94c8055042b4151ddffbd6331, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3420274616695927775
 GameObject:
   m_ObjectHideFlags: 0

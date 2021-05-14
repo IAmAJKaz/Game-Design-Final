@@ -7,119 +7,107 @@ public class PlayerMovement : MonoBehaviour {
     public Rigidbody2D rb;
     public Animator anim;
 
+    private LevelManager theLM;
+
+    //Death variables
+    private bool ctrlActive;
+    private bool isDead;
+    private Collider2D playerCol;
+    public GameObject[] childObjs;
+    public float shockForce;
+
     public float jumpForce = 25f;
     public Transform feet;
     public LayerMask groundLayers;
-
-    /* variables for dash function
-    public float dashDistance = 25f;
-    bool isDashing;
-    float doubleTapTime;
-    KeyCode lastKeyCode;
-    */
-
-    //Teleport Variables
-    public bool teleport;
-    public LayerMask whatIsTele;
 
     [HideInInspector] public bool isFacingRight = true;
 
     float mx;
 
+    private void Start() {
+        theLM = FindObjectOfType<LevelManager>();
+        playerCol = GetComponent<Collider2D>();
+        ctrlActive = true;
+    }
+
     private void Update() {
-        mx = Input.GetAxisRaw("Horizontal");
+        if (ctrlActive) {
+            mx = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetButtonDown("Jump") && IsGrounded()) {
-            Jump();
-        }
-
-        if(Mathf.Abs(mx) > 0.05f) {
-            anim.SetBool("isRunning", true);
-        }
-        else {
-            anim.SetBool("isRunning", false);
-        }
-
-        if (mx > 0f) {
-            transform.localScale = new Vector3(1.75f, 1.75f, 1.75f);
-            isFacingRight = true;
-        }
-        else if (mx < 0f) {
-            transform.localScale = new Vector3(-1.75f, 1.75f, 1.75f);
-            isFacingRight = false;
-        }
-
-        /* Glide function
-        if(!IsGrounded() && Input.GetKey(KeyCode.Space)) {
-            
-            change gravity here?
-        }
-        else {
-            set gravity back to normal here?
-        }
-        */
-
-        /*
-        //Dashing left
-        if (Input.GetKeyDown(KeyCode.A)) {
-            if(doubleTapTime > Time.time && lastKeyCode == KeyCode.A) {
-                StartCoroutine(Dash(-1f));
+            if (Input.GetButtonDown("Jump") && IsGrounded()) {
+                Jump();
+            }
+            if (Mathf.Abs(mx) > 0.05f) {
+                anim.SetBool("isRunning", true);
             }
             else {
-                doubleTapTime = Time.time + 0.3f;
+                anim.SetBool("isRunning", false);
             }
-            lastKeyCode = KeyCode.A;
+            if (mx > 0f) {
+                transform.localScale = new Vector3(1.75f, 1.75f, 1.75f);
+                isFacingRight = true;
+            }
+            else if (mx < 0f) {
+                transform.localScale = new Vector3(-1.75f, 1.75f, 1.75f);
+                isFacingRight = false;
+            }
         }
-        //Dashing right
-        if (Input.GetKeyDown(KeyCode.D)) {
-            if (doubleTapTime > Time.time && lastKeyCode == KeyCode.D) {
-                StartCoroutine(Dash(1f));
-            }
-            else {
-                doubleTapTime = Time.time + 0.3f;
-            }
-            lastKeyCode = KeyCode.D;
-        }
-        */
-
-
         anim.SetBool("isGrounded", IsGrounded());
     }
 
     private void FixedUpdate() {
-        //if (!isDashing) {
-            Vector2 movement = new Vector2(mx * movementSpeed, rb.velocity.y);
-
-            rb.velocity = movement;
-        //}
+        Vector2 movement = new Vector2(mx * movementSpeed, rb.velocity.y);
+        rb.velocity = movement;
     }
 
     void Jump() {
-        Vector2 movement = new Vector2(rb.velocity.x, jumpForce);
-        
+        Vector2 movement = new Vector2(rb.velocity.x, jumpForce);  
         rb.velocity = movement;
     }
 
     public bool IsGrounded() {
         Collider2D groundCheck = Physics2D.OverlapCircle(feet.position, 0.5f, groundLayers);
-
         if (groundCheck != null) {
             return true;
         }
-
         return false;
     }
 
-    /*  DASH FUNCTION:
-    IEnumerator Dash (float direction) {
-        isDashing = true;
-        rb.velocity = new Vector2(rb.velocity.x, 0f);
-        rb.AddForce(new Vector2(dashDistance * direction, 0f), ForceMode2D.Impulse);
-        float gravity = rb.gravityScale;
-        rb.gravityScale = 0;
-        yield return new WaitForSeconds(0.3f);
-        isDashing = false;
-        rb.gravityScale = gravity;
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("DeathBarrier")) {
+            Destroy(gameObject);
+            LevelManager.instance.Respawn();
+        }
+        else if (collision.gameObject.CompareTag("Enemy")) {
+            PlayerDeath();
+        }
     }
-    */
+
+    void PlayerDeath() {
+        isDead = true;
+        anim.SetBool("isDead", isDead);
+        ctrlActive = false;
+        playerCol.enabled = false;
+        foreach(GameObject child in childObjs) {
+            child.SetActive(false);
+        }
+        rb.gravityScale = 2.5f;
+        rb.AddForce(transform.up * shockForce, ForceMode2D.Impulse);
+        StartCoroutine("PlayerRespawn");
+    }
+
+    IEnumerator PlayerRespawn() {
+        yield return new WaitForSeconds(1.5f);
+        isDead = false;
+        anim.SetBool("isDead", isDead);  
+        playerCol.enabled = true;
+        foreach (GameObject child in childObjs) {
+            child.SetActive(true);
+        }
+        rb.gravityScale = 5f;
+        yield return new WaitForSeconds(0.1f);
+        ctrlActive = true;
+        theLM.Respawn();
+    }
+    
 }
