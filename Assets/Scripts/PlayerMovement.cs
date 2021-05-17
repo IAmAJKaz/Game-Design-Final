@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour {
     //Death variables
     private bool ctrlActive;
     private bool isDead;
-    private Collider2D playerCol;
+    private CapsuleCollider2D playerCol;
     public GameObject[] childObjs;
     public float shockForce;
 
@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Start() {
         theLM = FindObjectOfType<LevelManager>();
-        playerCol = GetComponent<Collider2D>();
+        playerCol = GetComponent<CapsuleCollider2D>();
         ctrlActive = true;
     }
 

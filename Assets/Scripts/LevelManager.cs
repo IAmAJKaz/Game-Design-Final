@@ -4,6 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LevelManager : MonoBehaviour {
     public static LevelManager instance;
@@ -19,14 +20,19 @@ public class LevelManager : MonoBehaviour {
     public int playerLives;
     public Text livesUI;
 
-
     [Header("Currency")]
     public int currency = 0;
     public Text currencyUI;
+    
+    [Header("LoseScreen")]
+    public TMP_Text endScreenCurrencyText;
+    public TMP_Text endScreenKillsText;
+
+    private int enemiesKilled;
 
     private void Awake() {
         instance = this;
-        livesUI.text = "" + playerLives;
+        livesUI.text = "x" + playerLives;
     }
 
     public void Respawn() {
@@ -38,8 +44,8 @@ public class LevelManager : MonoBehaviour {
         }
         else {
             gameOver.LoseScreen();
-            //livesUI.text = "0";
-            //Debug.Log("You lost, haha you suck");
+            endScreenCurrencyText.text = "$" + currency;
+            endScreenKillsText.text =  "" + enemiesKilled;
         }
     }
 
@@ -49,10 +55,13 @@ public class LevelManager : MonoBehaviour {
     }
     public void AddLife() {
         playerLives++;
-        livesUI.text = "" + playerLives;
+        livesUI.text = "x" + playerLives;
     }
     public void TakeLife() {
         playerLives--;
+    }
+    public void AddKill() {
+        enemiesKilled++;
     }
 }
 

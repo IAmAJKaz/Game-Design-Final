@@ -17,7 +17,7 @@ public class LivesManager : MonoBehaviour {
 
 
     void Update() {
-        livesUI.text = "x " + playerLives;
+        livesUI.text = "x" + playerLives;
         /*if (playerLives < 1) {
             StartCoroutine("QueGameOver");
         }*/

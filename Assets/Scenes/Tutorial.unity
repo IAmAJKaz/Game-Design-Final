@@ -1864,6 +1864,9 @@ MonoBehaviour:
   playerPrefab: {fileID: 3420274616539187098, guid: b916760b06a5cb5469b17e3a35b862f5,
     type: 3}
   cam: {fileID: 1901061526}
+  gameOver: {fileID: 0}
+  playerLives: 0
+  livesUI: {fileID: 0}
   currency: 0
   currencyUI: {fileID: 151074881}
 --- !u!4 &1698528932

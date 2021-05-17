@@ -57,6 +57,7 @@ public class EnemyPatrol : MonoBehaviour {
     }
 
     private void EnemyDeath() {
+        LevelManager.instance.AddKill();
         isDead = true;
         anim.SetBool("isDead", isDead);
         enemyCol.enabled = false;
