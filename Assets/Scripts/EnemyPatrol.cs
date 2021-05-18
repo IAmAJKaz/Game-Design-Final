@@ -57,6 +57,7 @@ public class EnemyPatrol : MonoBehaviour {
     }
 
     private void EnemyDeath() {
+        SoundManager.PlaySound("enemyDeath");
         LevelManager.instance.AddKill();
         isDead = true;
         anim.SetBool("isDead", isDead);

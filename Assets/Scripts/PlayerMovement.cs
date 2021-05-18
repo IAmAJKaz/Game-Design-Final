@@ -10,7 +10,8 @@ public class PlayerMovement : MonoBehaviour {
     private LevelManager theLM;
 
     //Death variables
-    private bool ctrlActive;
+    [HideInInspector]
+    public bool ctrlActive;
     private bool isDead;
     private CapsuleCollider2D playerCol;
     public GameObject[] childObjs;
@@ -79,6 +80,7 @@ public class PlayerMovement : MonoBehaviour {
             LevelManager.instance.Respawn();
         }
         else if (collision.gameObject.CompareTag("Enemy")) {
+            SoundManager.PlaySound("playerDeath");
             PlayerDeath();
         }
     }
