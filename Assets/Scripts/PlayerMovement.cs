@@ -110,6 +110,7 @@ public class PlayerMovement : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         ctrlActive = true;
         theLM.Respawn();
+        Destroy(gameObject);
     }
     
 }
