@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameOver : MonoBehaviour {
-    
-    public void LoseScreen() {
+public class LevelBeat : MonoBehaviour {
+    public void WinScreen() {
         gameObject.SetActive(true);
     }
-
     public void MainMenuScreen() {
         SceneManager.LoadScene("Menu");
     }
-
+    
 }

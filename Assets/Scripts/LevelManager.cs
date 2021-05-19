@@ -27,6 +27,7 @@ public class LevelManager : MonoBehaviour {
     [Header("LoseScreen")]
     public TMP_Text endScreenCurrencyText;
     public TMP_Text endScreenKillsText;
+    
 
     private int enemiesKilled;
 
@@ -62,6 +63,12 @@ public class LevelManager : MonoBehaviour {
     }
     public void AddKill() {
         enemiesKilled++;
+    }
+    public int getKillCount() {
+        return enemiesKilled;
+    }
+    public int getMoney() {
+        return currency;
     }
 }
 

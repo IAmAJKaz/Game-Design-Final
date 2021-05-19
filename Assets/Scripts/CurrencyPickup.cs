@@ -7,6 +7,7 @@ public class CurrencyPickup : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag("Player")) {
+            SoundManager.PlaySound("money");
             Destroy(gameObject);
             LevelManager.instance.IncreaseCurrency(worth);
         }

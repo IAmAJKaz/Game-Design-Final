@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 
 public class PlayerShoot : MonoBehaviour {
     public float fireRate = 0.2f;
@@ -24,5 +27,11 @@ public class PlayerShoot : MonoBehaviour {
     void Shoot() {
         float angle = pm.isFacingRight ? 0f : 180f;
         Instantiate(bulletPrefab, firingPoint.position, Quaternion.Euler(new Vector3(0f, 0f, angle)));
+    }
+
+    IEnumerator destroyBullet()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(bulletPrefab);
     }
 }
